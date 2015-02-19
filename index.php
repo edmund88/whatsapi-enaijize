@@ -9,11 +9,15 @@
   <div class="panel-body jumbotron">
 <?php	
 	require_once 'src/whatsprot.class.php';
+	require 'src/events/Events.php';
 	
 	$username = "15169608138";
 	$password = "5yLAHeyfVd50eFOt17CpT9kpQ/Y=";
 	 
 	$w = new WhatsProt($username, 0, "Enaijize System", true);
+	
+	$events = new MyEvents($w);
+	$events->setEventsToListenFor($events->activeEvents);
 	
 	echo "<b>Connecting...</b>";
 	$w->connect();
