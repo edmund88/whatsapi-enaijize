@@ -35,6 +35,15 @@
 
 	$db = pg_connect($pg_connection_string) or die("Could not connect");
 	
+	while(true) {
+		echo "<b>Polling...</b><br/>";
+		$w->pollMessage();
+		
+		echo "<b>Processing...</b><br/>";
+		$sql = "SELECT * FROM messages WHERE new = true";
+		$result = pg_query($db, $sql);
+
+	}
 		
 	echo "<b>Disconnecting...</b>";
 	$w->disconnect();
