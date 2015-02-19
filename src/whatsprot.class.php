@@ -2594,11 +2594,6 @@ class WhatsProt
     protected function processInboundData($data, $autoReceipt = true, $type = "read")
     {
         $node = $this->reader->nextTree($data);
-        if( $node != null ) {
-            try{$this->processInboundDataNode($node, $autoReceipt, $type);} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage();
-}
-        }
     }
 
     /**
