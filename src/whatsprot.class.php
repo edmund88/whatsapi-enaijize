@@ -623,7 +623,7 @@ class WhatsProt
       if (socket_select($r, $w, $e, static::TIMEOUT_SEC, static::TIMEOUT_USEC)) {
         // Something to read
         if ($stanza = $this->readStanza()) {
-          echo "stanza = readStanza() ";
+          $this->processInboundData($stanza, $autoReceipt, $type);
           return true;
         }
       }
@@ -2593,10 +2593,7 @@ class WhatsProt
      */
     protected function processInboundData($data, $autoReceipt = true, $type = "read")
     {
-        $node = $this->reader->nextTree($data);
-        if( $node != null ) {
-            $this->processInboundDataNode($node, $autoReceipt, $type);
-        }
+        echo "process inbound data ";
     }
 
     /**
