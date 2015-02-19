@@ -9,7 +9,6 @@ require_once 'tokenmap.class.php';
 require_once 'events/WhatsApiEventsManager.php';
 require_once 'SqliteMessageStore.php';
 
-
 class SyncResult
 {
     public $index;
@@ -2594,12 +2593,12 @@ class WhatsProt
      */
     protected function processInboundData($data, $autoReceipt = true, $type = "read")
     {
-		echo "process inbound data";
-		try {
         $node = $this->reader->nextTree($data);
-		} catch (Exception $e) {
+        if( $node != null ) {
+            try{$this->processInboundDataNode($node, $autoReceipt, $type);} catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage();
-		}
+}
+        }
     }
 
     /**
