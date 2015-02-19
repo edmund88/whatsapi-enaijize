@@ -106,7 +106,7 @@ class MyEvents extends AllEvents
 		$lastmessage = pg_fetch_assoc($result);
 
 		if(!$lastmessage) {
-			$sql = "INSERT INTO messages (sender, time_sent, message, new) VALUES ('" . $from . "', " . $time . ", '" . $body . "', true)";
+			$sql = "INSERT INTO messages (sender, time_sent, message, new) VALUES ('" . $from . "', " . $time . ", '" . $body . "', TRUE)";
 			if (pg_query($db, $sql)) {
 				echo "New record created successfully<br/>";
 			} else {
@@ -114,7 +114,7 @@ class MyEvents extends AllEvents
 			}
 		}
 		else {
-			$sql = "UPDATE messages SET time_sent='" . $time . "', message='" . $body . "', prev_message='" . $lastmessage['message'] . "', new=true WHERE sender='" . $from . "'";		
+			$sql = "UPDATE messages SET time_sent='" . $time . "', message='" . $body . "', prev_message='" . $lastmessage['message'] . "', new=TRUE WHERE sender='" . $from . "'";		
 			if (pg_query($db, $sql)) {
 				echo "Record updated successfully<br/>";
 			} else {
