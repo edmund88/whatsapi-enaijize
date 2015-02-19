@@ -38,34 +38,7 @@
 	while(true) {
 		echo "<b>Polling...</b><br/>";
 		$w->pollMessage();
-		
-		echo "<b>Processing...</b><br/>";
-		$sql = "SELECT * FROM messages WHERE new = TRUE";
-		$result = pg_query($db, $sql);
 
-		while($message = pg_fetch_assoc($result)) {
-			switch($message["message"]) {
-				case "YES":
-					if($message["prev_message"] == "YES" || !$message["prev_message"])
-						$reply = "Nothing to confirm. Please enter a valid command.";
-					else	
-						$reply = "Previous message '" . $message["prev_message"] . "' has been confirmed.";
-					break;
-				default:
-					$reply = "You entered '" . $message["message"] . "'. Please reply with 'YES' to confirm.";
-			}
-				
-			$sql = "UPDATE messages SET new=FALSE WHERE sender='" . $message["sender"] . "'";		
-			if (pg_query($db, $sql)) {
-				echo "Record updated successfully";
-			} else {
-				echo "Error: " . $sql;
-			}
-				
-			echo "<b>Sending...</b><br/>";
-			$w->sendMessage($message["sender"], $reply);
-
-		}
 	}
 		
 	echo "<b>Disconnecting...</b>";
