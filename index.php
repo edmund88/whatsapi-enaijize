@@ -38,6 +38,7 @@
 	
 	while(true) {
 		echo "<b>Polling...</b><br/>";
+		$w->pollMessage();
 
 	}
 		
