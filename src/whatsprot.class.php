@@ -626,7 +626,6 @@ class WhatsProt
         if ($stanza = $this->readStanza()) {
           $this->processInboundData($stanza, $autoReceipt, $type);
 		  echo "stanza = this->readStanza() ";
-		  return;
         }
       }
 
