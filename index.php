@@ -40,7 +40,7 @@
 		$w->pollMessage();
 		
 		echo "<b>Processing...</b><br/>";
-		$sql = "SELECT * FROM messages WHERE new = 1";
+		$sql = "SELECT * FROM messages WHERE new = true";
 		$result = pg_query($db, $sql);
 
 		while($message = pg_fetch_assoc($result)) {
@@ -55,7 +55,7 @@
 					$reply = "You entered '" . $message["message"] . "'. Please reply with 'YES' to confirm.";
 			}
 				
-			$sql = "UPDATE messages SET new=0 WHERE sender='" . $message["sender"] . "'";		
+			$sql = "UPDATE messages SET new=false WHERE sender='" . $message["sender"] . "'";		
 			if (pg_query($db, $sql)) {
 				echo "Record updated successfully";
 			} else {

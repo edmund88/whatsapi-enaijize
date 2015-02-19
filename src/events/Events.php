@@ -103,10 +103,10 @@ class MyEvents extends AllEvents
 	
 		$sql = "SELECT * FROM messages WHERE sender = '" . $from . "'";
 		$result = pg_query($db, $sql);
-		$lastmessage = pg_fetch_assoc($resulty);
+		$lastmessage = pg_fetch_assoc($result);
 
 		if(!$lastmessage) {
-			$sql = "INSERT INTO messages (sender, time_sent, message, new) VALUES ('" . $from . "', " . $time . ", '" . $body . "', 1)";
+			$sql = "INSERT INTO messages (sender, time_sent, message, new) VALUES ('" . $from . "', " . $time . ", '" . $body . "', true)";
 			if (pg_query($db, $sql)) {
 				echo "New record created successfully<br/>";
 			} else {
@@ -114,7 +114,7 @@ class MyEvents extends AllEvents
 			}
 		}
 		else {
-			$sql = "UPDATE messages SET time_sent='" . $time . "', message='" . $body . "', prev_message='" . $lastmessage['message'] . "', new=1 WHERE sender='" . $from . "'";		
+			$sql = "UPDATE messages SET time_sent='" . $time . "', message='" . $body . "', prev_message='" . $lastmessage['message'] . "', new=true WHERE sender='" . $from . "'";		
 			if (pg_query($db, $sql)) {
 				echo "Record updated successfully<br/>";
 			} else {
