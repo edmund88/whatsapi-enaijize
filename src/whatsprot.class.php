@@ -9,6 +9,8 @@ require_once 'tokenmap.class.php';
 require_once 'events/WhatsApiEventsManager.php';
 require_once 'SqliteMessageStore.php';
 
+Rollbar::init(array('access_token' => '000f38864dd6491f8240d46cd8758200'));
+
 class SyncResult
 {
     public $index;
@@ -2593,7 +2595,12 @@ class WhatsProt
      */
     protected function processInboundData($data, $autoReceipt = true, $type = "read")
     {
-        echo "process inbound data ";
+		echo "process inbound data";
+		try {
+        $node = $this->reader->nextTree($data);
+		} catch (Exception $e) {
+    Rollbar::report_exception($e);
+		}
     }
 
     /**
