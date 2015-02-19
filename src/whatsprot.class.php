@@ -612,11 +612,16 @@ class WhatsProt
      */
     public function pollMessage($autoReceipt = true, $type = "read")
     {
-	  echo "pollMessage() ";
+	  echo "pollMessage()";
       if(!$this->isConnected()) {
-		echo "is not connected ";
         throw new ConnectionException('Connection Closed!');
       }
+
+      $r = array($this->socket);
+      $w = array();
+      $e = array();
+
+ 
     }
 
     /**
