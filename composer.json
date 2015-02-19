@@ -1,0 +1,14 @@
+{
+    "name": "enaijize",
+    "description": "Enaijize WhatsApp Messenger Autoresponder",
+    "autoload": {
+        "classmap": [
+            "src/",
+            "src/events"
+        ]
+    },
+    "require": {
+        "php": ">=5.3",
+        "ext-curl": "*"
+    }
+}
