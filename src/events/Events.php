@@ -91,39 +91,38 @@ class MyEvents extends AllEvents
 		$from = chop($from,'@s.whatsapp.net');
 		$body = strtoupper($body);
 	
-		$servername = "localhost";
-		$username = "njabang_whatsapp";
-		$password = "enaijize14";
-		$dbname = "njabang_whatsapp";
+		$servername = "ec2-50-19-236-178.compute-1.amazonaws.com";
+		$port = "5432";
+		$username = "dsrxtxfrujicul";
+		$password = "abU_kylvHNeWMFJRwzPnQajP8P";
+		$dbname = "db7ctk55jodcoo";
+		
+		$pg_connection_string = "dbname=" . $dbname . " host=" . $servername . " port=" . $port . " user=" . $username . " password=" . $password . " sslmode=require";
 
-		$conn = new mysqli($servername, $username, $password, $dbname);
-
-		if ($conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
-		} 
+		$db = pg_connect($pg_connection_string) or die("Could not connect");
 	
 		$sql = "SELECT * FROM messages WHERE sender = '" . $from . "'";
-		$result = mysqli_query($conn, $sql);
-		$lastmessage = mysqli_fetch_array($result, MYSQLI_ASSOC);
+		$result = pg_query($db, $sql);
+		$lastmessage = pg_fetch_assoc($resulty);
 
 		if(!$lastmessage) {
 			$sql = "INSERT INTO messages (sender, time_sent, message, new) VALUES ('" . $from . "', " . $time . ", '" . $body . "', 1)";
-			if ($conn->query($sql) === TRUE) {
+			if (pg_query($db, $sql)) {
 				echo "New record created successfully<br/>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
+				echo "Error: " . $sql;
 			}
 		}
 		else {
 			$sql = "UPDATE messages SET time_sent='" . $time . "', message='" . $body . "', prev_message='" . $lastmessage['message'] . "', new=1 WHERE sender='" . $from . "'";		
-			if ($conn->query($sql) === TRUE) {
+			if (pg_query($db, $sql)) {
 				echo "Record updated successfully<br/>";
 			} else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
+				echo "Error: " . $sql;
 			}			
 		}
 		
-		$conn->close();
+		pg_close($db);
     }
 
     public function onSendMessage($mynumber, $target, $messageId, $node)
