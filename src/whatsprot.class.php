@@ -623,7 +623,11 @@ class WhatsProt
 
       if (socket_select($r, $w, $e, static::TIMEOUT_SEC, static::TIMEOUT_USEC)) {
         // Something to read
-		echo "socket_select() ";
+        if ($stanza = $this->readStanza()) {
+          $this->processInboundData($stanza, $autoReceipt, $type);
+		  echo "stanza = this->readStanza() ";
+		  return;
+        }
       }
 
     }
