@@ -613,23 +613,6 @@ class WhatsProt
     public function pollMessage($autoReceipt = true, $type = "read")
     {
 	  echo "pollMessage()";
-      if(!$this->isConnected()) {
-        throw new ConnectionException('Connection Closed!');
-      }
-
-      $r = array($this->socket);
-      $w = array();
-      $e = array();
-
-      if (socket_select($r, $w, $e, static::TIMEOUT_SEC, static::TIMEOUT_USEC)) {
-        // Something to read
-        if ($stanza = $this->readStanza()) {
-          $this->processInboundData($stanza, $autoReceipt, $type);
-          return true;
-        }
-      }
-
-      return false;
     }
 
     /**
