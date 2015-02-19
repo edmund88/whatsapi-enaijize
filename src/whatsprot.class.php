@@ -621,7 +621,11 @@ class WhatsProt
       $w = array();
       $e = array();
 
- 
+      if (socket_select($r, $w, $e, static::TIMEOUT_SEC, static::TIMEOUT_USEC)) {
+        // Something to read
+		echo "socket_select() ";
+      }
+
     }
 
     /**
