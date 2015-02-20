@@ -38,11 +38,11 @@
 	
 	while(true) {
 		echo "<b>Polling...</b><br/>";
+		$w->pollMessage();
 		
 		echo "<b>Processing...</b><br/>";
-		$sql = "SELECT * FROM messages WHERE new = TRUE";
+		$sql = "SELECT * FROM messages WHERE new";
 		$result = pg_query($db, $sql);
-		echo pg_fetch_assoc($result)["message"];
 
 		while($message = pg_fetch_assoc($result)) {
 			switch($message["message"]) {
