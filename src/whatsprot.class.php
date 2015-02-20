@@ -2612,7 +2612,6 @@ class WhatsProt
         $this->serverReceivedId = $node->getAttribute('id');
 
         if ($node->getTag() == "challenge") {
-			$this->loginStatus = static::CONNECTED_STATUS;
             $this->processChallenge($node);
         }
         elseif($node->getTag() == "failure"  )
