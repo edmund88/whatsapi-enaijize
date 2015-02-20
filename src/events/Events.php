@@ -52,8 +52,8 @@ class MyEvents extends AllEvents
 //        'onGroupsChatEnd',
 //        'onGroupsParticipantsAdd',
 //        'onGroupsParticipantsRemove',
-        'onLogin',
-        'onLoginFailed',
+//        'onLogin',
+//        'onLoginFailed',
 //        'onAccountExpired',
 //        'onMediaMessageSent',
 //        'onMediaUploadFailed',
@@ -91,51 +91,41 @@ class MyEvents extends AllEvents
 		$from = chop($from,'@s.whatsapp.net');
 		$body = strtoupper($body);
 	
-		$servername = "ec2-50-19-236-178.compute-1.amazonaws.com";
-		$port = "5432";
-		$username = "dsrxtxfrujicul";
-		$password = "abU_kylvHNeWMFJRwzPnQajP8P";
-		$dbname = "db7ctk55jodcoo";
-		
-		$pg_connection_string = "dbname=" . $dbname . " host=" . $servername . " port=" . $port . " user=" . $username . " password=" . $password . " sslmode=require";
+		$servername = "localhost";
+		$username = "njabang_whatsapp";
+		$password = "enaijize14";
+		$dbname = "njabang_whatsapp";
 
-		$db = pg_connect($pg_connection_string) or die("Could not connect");
+		$conn = new mysqli($servername, $username, $password, $dbname);
+
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		} 
 	
 		$sql = "SELECT * FROM messages WHERE sender = '" . $from . "'";
-		$result = pg_query($db, $sql);
-		$lastmessage = pg_fetch_assoc($result);
+		$result = mysqli_query($conn, $sql);
+		$lastmessage = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 		if(!$lastmessage) {
-			$sql = "INSERT INTO messages (sender, time_sent, message, new) VALUES ('" . $from . "', " . $time . ", '" . $body . "', TRUE)";
-			if (pg_query($db, $sql)) {
+			$sql = "INSERT INTO messages (sender, time_sent, message, new) VALUES ('" . $from . "', " . $time . ", '" . $body . "', 1)";
+			if ($conn->query($sql) === TRUE) {
 				echo "New record created successfully<br/>";
 			} else {
-				echo "Error: " . $sql;
+				echo "Error: " . $sql . "<br>" . $conn->error;
 			}
 		}
 		else {
-			$sql = "UPDATE messages SET time_sent='" . $time . "', message='" . $body . "', prev_message='" . $lastmessage['message'] . "', new=TRUE WHERE sender='" . $from . "'";		
-			if (pg_query($db, $sql)) {
+			$sql = "UPDATE messages SET time_sent='" . $time . "', message='" . $body . "', prev_message='" . $lastmessage['message'] . "', new=1 WHERE sender='" . $from . "'";		
+			if ($conn->query($sql) === TRUE) {
 				echo "Record updated successfully<br/>";
 			} else {
-				echo "Error: " . $sql;
+				echo "Error: " . $sql . "<br>" . $conn->error;
 			}			
 		}
 		
-		pg_close($db);
+		$conn->close();
     }
 
-    public function onLogin($mynumber)
-    {
-        echo "Logged in.";
-    }
-
-    public function onLoginFailed($mynumber, $data)
-    {
-        echo "Login failed.";
-    }	
-	
-	
     public function onSendMessage($mynumber, $target, $messageId, $node)
     {
         echo "Message $messageId sent to $target.</br>";

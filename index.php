@@ -25,26 +25,26 @@
 	$w->loginWithPassword($password);
  
 	echo "<b>Connecting to database...</b>";
-	$servername = "ec2-50-19-236-178.compute-1.amazonaws.com";
-	$port = "5432";
-	$username = "dsrxtxfrujicul";
-	$password = "abU_kylvHNeWMFJRwzPnQajP8P";
-	$dbname = "db7ctk55jodcoo";
-	
-	$pg_connection_string = "dbname=" . $dbname . " host=" . $servername . " port=" . $port . " user=" . $username . " password=" . $password . " sslmode=require";
+	$dbservername = "localhost";
+	$dbusername = "njabang_whatsapp";
+	$dbpassword = "enaijize14";
+	$dbname = "njabang_whatsapp";
 
-	$db = pg_connect($pg_connection_string) or die("Could not connect");
-	echo "Connected.<br/>";
+	$conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
+
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 
 	
 	while(true) {
 		echo "<b>Polling...</b><br/>";
 		$w->pollMessage();
 		
 		echo "<b>Processing...</b><br/>";
-		$sql = "SELECT * FROM messages WHERE new = TRUE";
-		$result = pg_query($db, $sql);
+		$sql = "SELECT * FROM messages WHERE new = 1";
+		$result = mysqli_query($conn, $sql);
 
-		while($message = pg_fetch_assoc($result)) {
+		while($message = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 			switch($message["message"]) {
 				case "YES":
 					if($message["prev_message"] == "YES" || !$message["prev_message"])
@@ -56,11 +56,11 @@
 					$reply = "You entered '" . $message["message"] . "'. Please reply with 'YES' to confirm.";
 			}
 				
-			$sql = "UPDATE messages SET new=FALSE WHERE sender='" . $message["sender"] . "'";		
-			if (pg_query($db, $sql)) {
+			$sql = "UPDATE messages SET new=0 WHERE sender='" . $message["sender"] . "'";		
+			if ($conn->query($sql) === TRUE) {
 				echo "Record updated successfully";
 			} else {
-				echo "Error: " . $sql;
+				echo "Error: " . $sql . "<br>" . $conn->error;
 			}
 				
 			echo "<b>Sending...</b><br/>";
