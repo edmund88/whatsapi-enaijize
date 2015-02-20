@@ -2595,7 +2595,7 @@ class WhatsProt
     {
         $node = $this->reader->nextTree($data);
         if( $node != null ) {
-            $this->processInboundDataNode($node, $autoReceipt, $type);
+            //$this->processInboundDataNode($node, $autoReceipt, $type);
         }
     }
 

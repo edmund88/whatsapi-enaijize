@@ -38,6 +38,7 @@
 	
 	while(true) {
 		echo "<b>Polling...</b><br/>";
+		$w->pollMessage();
 		
 		echo "<b>Processing...</b><br/>";
 		$sql = "SELECT * FROM messages WHERE new = 1";
