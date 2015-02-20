@@ -25,10 +25,10 @@
 	$w->loginWithPassword($password);
  
 	echo "<b>Connecting to database...</b>";
-	$dbservername = "localhost";
-	$dbusername = "njabang_whatsapp";
-	$dbpassword = "enaijize14";
-	$dbname = "njabang_whatsapp";
+	$dbservername = "mysql://bcdca4bcfe9366:bfc05937@us-cdbr-iron-east-01.cleardb.net/heroku_555506e4f7e7997?reconnect=true";
+	$dbusername = "bcdca4bcfe9366";
+	$dbpassword = "bfc05937";
+	$dbname = "heroku_555506e4f7e7997";
 
 	$conn = new mysqli($dbservername, $dbusername, $dbpassword, $dbname);
 
