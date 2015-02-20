@@ -41,7 +41,7 @@
 		$w->pollMessage();
 		
 		echo "<b>Processing...</b><br/>";
-		$sql = "SELECT * FROM messages WHERE new";
+		$sql = "SELECT * FROM messages WHERE new = TRUE";
 		$result = pg_query($db, $sql);
 
 		while($message = pg_fetch_assoc($result)) {
