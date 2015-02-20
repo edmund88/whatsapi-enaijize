@@ -91,7 +91,7 @@ class MyEvents extends AllEvents
 		$from = chop($from,'@s.whatsapp.net');
 		$body = strtoupper($body);
 	
-		$servername = "mysql://bcdca4bcfe9366:bfc05937@us-cdbr-iron-east-01.cleardb.net/heroku_555506e4f7e7997?reconnect=true";
+		$servername = "us-cdbr-iron-east-01.cleardb.net";
 		$username = "bcdca4bcfe9366";
 		$password = "bfc05937";
 		$dbname = "heroku_555506e4f7e7997";

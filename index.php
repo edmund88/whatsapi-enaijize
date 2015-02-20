@@ -25,7 +25,7 @@
 	$w->loginWithPassword($password);
  
 	echo "<b>Connecting to database...</b>";
-	$dbservername = "mysql://bcdca4bcfe9366:bfc05937@us-cdbr-iron-east-01.cleardb.net/heroku_555506e4f7e7997?reconnect=true";
+	$dbservername = "us-cdbr-iron-east-01.cleardb.net";
 	$dbusername = "bcdca4bcfe9366";
 	$dbpassword = "bfc05937";
 	$dbname = "heroku_555506e4f7e7997";
