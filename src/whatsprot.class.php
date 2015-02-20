@@ -2594,6 +2594,9 @@ class WhatsProt
     protected function processInboundData($data, $autoReceipt = true, $type = "read")
     {
         $node = $this->reader->nextTree($data);
+        if( $node != null ) {
+            $this->processInboundDataNode($node, $autoReceipt, $type);
+        }
     }
 
     /**
