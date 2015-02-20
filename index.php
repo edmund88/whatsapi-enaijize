@@ -42,6 +42,7 @@
 		echo "<b>Processing...</b><br/>";
 		$sql = "SELECT * FROM messages WHERE new = TRUE";
 		$result = pg_query($db, $sql);
+		echo pg_fetch_assoc($result)["message"];
 
 		while($message = pg_fetch_assoc($result)) {
 			switch($message["message"]) {
